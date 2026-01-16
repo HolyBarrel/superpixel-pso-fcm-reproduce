@@ -30,8 +30,8 @@ public class SuperpixelParamsExperiment implements IExperiment {
 
 
 		// Initialize new MLflow client to connect to local MLflow server
-		MLFlow mlFlow = new MLFlow("http://35.185.118.215:8080/");
-
+        String trackingUri = System.getenv().getOrDefault("MLFLOW_TRACKING_URI", "http://127.0.0.1:8080");
+        MLFlow mlFlow = new MLFlow(trackingUri);
 		// Create a new experiment
 		String experimentName = "superpixel-params-experiment";
 		mlFlow.initializeExperiment(experimentName);

@@ -34,10 +34,9 @@ public class HyperParamExperiment implements IExperiment {
 
 
 		// Initialize new MLflow client to connect to local MLflow server
-		MLFlow mlFlow = new MLFlow();
-
-		// Create a new experiment
-		mlFlow.initializeExperiment("hyperparam-experiment");
+        String trackingUri = System.getenv().getOrDefault("MLFLOW_TRACKING_URI", "http://127.0.0.1:8080");
+        MLFlow mlFlow = new MLFlow(trackingUri);
+        mlFlow.initializeExperiment("hyperparam-experiment");
 
 		Dataset dataset = new Dataset(DatasetName.indian_pines);
 		dataset.setupSuperpixelContainer();

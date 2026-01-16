@@ -83,8 +83,19 @@ public class Dataset implements IDataset {
 
 	}
 
+    public INDArray getPixelIntensity(int pixelIndex) {
+        if (pixelIndex < 0 || pixelIndex >= this.numPixels) {
+            throw new IllegalArgumentException("pixelIndex out of range: " + pixelIndex);
+        }
+        int row = pixelIndex / this.imageWidth;   // y
+        int col = pixelIndex % this.imageWidth;   // x
+        // Shape of data is [numBands, imageHeight, imageWidth]
+        return this.data
+                .get(NDArrayIndex.all(), NDArrayIndex.point(row), NDArrayIndex.point(col))
+                .reshape(this.numBands);
+    }
 
-	/**
+    /**
 	 * Loads the dataset from the given path.
 	 *
 	 * @throws IOException if the dataset cannot be loaded
